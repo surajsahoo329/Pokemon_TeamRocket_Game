@@ -1,6 +1,5 @@
 # 1 - Import library
 import pygame
-from pygame.locals import *
 
 # 2 - Initialize the game
 pygame.init()
@@ -15,7 +14,7 @@ meowth = pygame.image.load("resources/images/meowth.png")
 james = pygame.image.load("resources/images/james.png")
 jessie = pygame.image.load("resources/images/jessie.png")
 go = pygame.image.load("resources/images/pokeball.png")
-background = pygame.image.load("resources/images/background.jpg")
+background = pygame.image.load("resources/images/background.png")
 boat = pygame.image.load("resources/images/boat.png")
 grass = pygame.image.load("resources/images/grass.png")
 
