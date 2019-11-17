@@ -101,7 +101,7 @@ while not exit_demo:  # 4 - keep looping through
         screen.blit(jessie, jessiePos)
 
     screen.blit(grass, (0, 182))  # left side grass
-    screen.blit(go, (640, 50))
+    screen.blit(go, (640, 50))  # Go pokeball boat rowing signal
     if boatLeftFlag:
         screen.blit(boat, boatPos)
     screen.blit(grass, (960, 182))  # right side grass 7 - update the screen
@@ -244,6 +244,12 @@ while not exit_demo:  # 4 - keep looping through
                 jessiePos = (1210, 210)
                 rightSeatFlag = True
                 jessieRightFlag = False  # Off boarding boat jessie
+
+            if event.button == 1 and rect.left + 10 + 705 > x > rect.left + 10 + 555 and rect.top + 30 + 120 > y > rect.top + 30 + 50 and (
+                    not leftSeatFlag or not rightSeatFlag):
+                print("go")
+            else:
+                print("nopes")
 
     screen.blit(boat, boatPos)  # draw boat image here
     screen.blit(pikachu, pikachuPos)  # draw pikachu image here
