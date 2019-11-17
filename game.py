@@ -1,9 +1,13 @@
 # 1 - Import library
-import os
 import tkinter as tk
+from ctypes import POINTER, WINFUNCTYPE, windll
+from ctypes.wintypes import BOOL, HWND, RECT
 
+import os
 import pyautogui
 import pygame
+
+os.environ['SDL_VIDEO_CENTERED'] = '1'
 
 root = tk.Tk()
 
@@ -20,13 +24,6 @@ pygame.display.set_caption('Pokemon Team-Rocket Game')
 clock = pygame.time.Clock()  # for limiting FPS
 FPS = 30
 exit_demo = False
-
-pos_x = screen_width - width
-pos_y = screen_height - height
-os.environ['SDL_VIDEO_WINDOW_POS'] = '%i,%i' % (pos_x, pos_y)
-os.environ['SDL_VIDEO_CENTERED'] = '0'
-
-print(pos_x, pos_y)
 
 # 3 - Load images
 pikachu = pygame.image.load("resources/images/pikachu.png")
@@ -72,8 +69,23 @@ while not exit_demo:
     # 6 - draw the screen elements
     screen.blit(background, (0, 0))
 
+    # get our window ID:
+    hwnd = pygame.display.get_wm_info()["window"]
+
+    # Jump through all the ctypes hoops:
+    prototype = WINFUNCTYPE(BOOL, HWND, POINTER(RECT))
+    paramflags = (1, "hwnd"), (2, "lprect")
+
+    GetWindowRect = prototype(("GetWindowRect", windll.user32), paramflags)
+
+    # finally get our data!
+    rect = GetWindowRect(hwnd)
+    print("top, left, bottom, right: ", rect.top, rect.left, rect.bottom, rect.right)
+
+    # bottom, top, left, right:  644 98 124 644
+
     if pikachuFlag:
-        screen.blit(pikachu, pikachuPos)
+        blit = screen.blit(pikachu, pikachuPos)
     if squirtleFlag:
         screen.blit(squirtle, squirtlePos)
     if charmanderFlag:
