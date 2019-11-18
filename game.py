@@ -250,9 +250,6 @@ while not exit_demo:  # 4 - keep looping through
 
             else:
 
-                print(x, y)
-                print(rect.left, rect.right, rect.top, rect.bottom)
-
                 if event.button == 1 and rect.left + 10 + 70 > x > rect.left + 10 + 20 and rect.bottom - 10 - 130 > y > rect.bottom - 10 - 160 and (
                         not pikachuLeftFlag or not pikachuRightFlag):  # 1-left, 2-middle, 3-right, 4-height, 5-wheel
                     # up,
