@@ -73,6 +73,8 @@ boatLeftFlag = False
 
 leftSeatBoatRHS = (850, 292)  # left seat of right hand side boat
 rightSeatBoatRHS = (900, 292)  # right seat of right hand side boat
+leftSeatBoatLHS = (340, 292)  # left seat of left hand side boat
+rightSeatBoatLHS = (390, 292)  # right seat of left hand side boat
 
 leftSeatFlag = True
 rightSeatFlag = True
@@ -245,11 +247,23 @@ while not exit_demo:  # 4 - keep looping through
                 rightSeatFlag = True
                 jessieRightFlag = False  # Off boarding boat jessie
 
+            # row boat condition
+
             if event.button == 1 and rect.left + 10 + 705 > x > rect.left + 10 + 555 and rect.top + 30 + 120 > y > rect.top + 30 + 50 and (
                     not leftSeatFlag or not rightSeatFlag):
-                print("go")
+                boatLeftFlag = False
+                boatRightFlag = True
+                boatPos = (330, 332)
+
+                if leftSeatFlag and rightSeatFlag:
+                    print("1")
+
+                elif leftSeatFlag and not rightSeatFlag:
+                    print("2")
+                elif not leftSeatFlag and rightSeatFlag:
+                    print("3")
             else:
-                print("nopes")
+                print("Cannot row")
 
     screen.blit(boat, boatPos)  # draw boat image here
     screen.blit(pikachu, pikachuPos)  # draw pikachu image here
