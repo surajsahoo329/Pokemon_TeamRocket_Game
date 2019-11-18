@@ -106,7 +106,7 @@ while not exit_demo:  # 4 - keep looping through
     screen.blit(go, (640, 50))  # Go pokeball boat rowing signal
     screen.blit(water, (330, 240))  # water position
     screen.blit(boat, boatPos)
-    screen.blit(grass, (960, 175))  # right side grass 7 - update the screen
+    screen.blit(grass, (960, 177))  # right side grass 7 - update the screen
 
     x = pyautogui.position().x  # x-coordinate of mouse position on screen not window
     y = pyautogui.position().y  # y-coordinate of mouse position
@@ -119,9 +119,9 @@ while not exit_demo:  # 4 - keep looping through
 
         elif pygame.MOUSEBUTTONUP == event.type:
 
-            # Pikachu movements
-
             if boatRightFlag:
+
+                # Pikachu movements
 
                 if event.button == 1 and rect.right - 10 - 270 > x > rect.right - 10 - 320 and rect.bottom - 10 - 130 > y > rect.bottom - 10 - 160 and (
                         not pikachuLeftFlag or not pikachuRightFlag):  # 1-left, 2-middle, 3-right, 4-height, 5-wheel up,
@@ -249,9 +249,137 @@ while not exit_demo:  # 4 - keep looping through
                     jessieRightFlag = False  # Off boarding boat jessie
 
             else:
-                print("lhs ")
 
-            # row boat condition
+                print(x, y)
+                print(rect.left, rect.right, rect.top, rect.bottom)
+
+                if event.button == 1 and rect.left + 10 + 70 > x > rect.left + 10 + 20 and rect.bottom - 10 - 130 > y > rect.bottom - 10 - 160 and (
+                        not pikachuLeftFlag or not pikachuRightFlag):  # 1-left, 2-middle, 3-right, 4-height, 5-wheel
+                    # up,
+                    # 6-wheel down
+                    if leftSeatFlag:
+                        pikachuPos = leftSeatBoatLHS
+                        leftSeatFlag = False
+                        pikachuLeftFlag = True
+                    elif rightSeatFlag:
+                        pikachuPos = rightSeatBoatLHS
+                        rightSeatFlag = False
+                        pikachuRightFlag = True  # On Boarding boat pikachu
+                if event.button == 1 and rect.left + 10 + 370 > x > rect.left + 10 + 320 and rect.bottom - 10 - 140 > y > rect.bottom - 10 - 180 and pikachuLeftFlag:
+                    pikachuPos = (20, 312)
+                    leftSeatFlag = True
+                    pikachuLeftFlag = False
+                if event.button == 1 and rect.left + 10 + 420 > x > rect.left + 10 + 370 and rect.bottom - 10 - 140 > y > rect.bottom - 10 - 180 and pikachuRightFlag:
+                    pikachuPos = (20, 312)
+                    rightSeatFlag = True
+                    pikachuRightFlag = False  # Off boarding boat pikachu
+
+                # Squirtle movements
+
+                if event.button == 1 and rect.left + 10 + 120 > x > rect.left + 10 + 70 and rect.bottom - 10 - 130 > y > rect.bottom - 10 - 170 and (
+                        not squirtleLeftFlag or not squirtleRightFlag):
+                    if leftSeatFlag:
+                        squirtlePos = leftSeatBoatLHS
+                        leftSeatFlag = False
+                        squirtleLeftFlag = True
+                    elif rightSeatFlag:
+                        squirtlePos = rightSeatBoatLHS
+                        rightSeatFlag = False
+                        squirtleRightFlag = True  # On Boarding boat squirtle
+                if event.button == 1 and rect.left + 10 + 370 > x > rect.left + 10 + 320 and rect.bottom - 10 - 140 > y > rect.bottom - 10 - 180 and squirtleLeftFlag:
+                    squirtlePos = (70, 312)
+                    leftSeatFlag = True
+                    squirtleLeftFlag = False
+                if event.button == 1 and rect.left + 10 + 420 > x > rect.left + 10 + 370 and rect.bottom - 10 - 140 > y > rect.bottom - 10 - 180 and squirtleRightFlag:
+                    squirtlePos = (70, 312)
+                    rightSeatFlag = True
+                    squirtleRightFlag = False  # Off boarding boat squirtle
+
+                # Charmander movements
+
+                if event.button == 1 and rect.left + 10 + 170 > x > rect.left + 10 + 120 and rect.bottom - 10 - 130 > y > rect.bottom - 10 - 170 and (
+                        not charmanderLeftFlag or not charmanderRightFlag):
+                    if leftSeatFlag:
+                        charmanderPos = leftSeatBoatLHS
+                        leftSeatFlag = False
+                        charmanderLeftFlag = True
+                    elif rightSeatFlag:
+                        charmanderPos = rightSeatBoatLHS
+                        rightSeatFlag = False
+                        charmanderRightFlag = True  # On Boarding boat charmander
+                if event.button == 1 and rect.left + 10 + 370 > x > rect.left + 10 + 320 and rect.bottom - 10 - 140 > y > rect.bottom - 10 - 180 and charmanderLeftFlag:
+                    charmanderPos = (120, 312)
+                    leftSeatFlag = True
+                    charmanderLeftFlag = False
+                if event.button == 1 and rect.left + 10 + 420 > x > rect.left + 10 + 370 and rect.bottom - 10 - 140 > y > rect.bottom - 10 - 180 and charmanderRightFlag:
+                    charmanderPos = (120, 312)
+                    rightSeatFlag = True
+                    charmanderRightFlag = False  # Off boarding boat charmander
+
+                # Meowth movements
+
+                if event.button == 1 and rect.left + 10 + 220 > x > rect.left + 10 + 170 and rect.bottom - 10 - 130 > y > rect.bottom - 10 - 170 and (
+                        not meowthLeftFlag or not meowthRightFlag):
+                    if leftSeatFlag:
+                        meowthPos = leftSeatBoatLHS
+                        leftSeatFlag = False
+                        meowthLeftFlag = True
+                    elif rightSeatFlag:
+                        meowthPos = rightSeatBoatLHS
+                        rightSeatFlag = False
+                        meowthRightFlag = True  # On Boarding boat meowth
+                if event.button == 1 and rect.left + 10 + 370 > x > rect.left + 10 + 320 and rect.bottom - 10 - 140 > y > rect.bottom - 10 - 180 and meowthLeftFlag:
+                    meowthPos = (170, 307)
+                    leftSeatFlag = True
+                    meowthLeftFlag = False
+                if event.button == 1 and rect.left + 10 + 420 > x > rect.left + 10 + 370 and rect.bottom - 10 - 140 > y > rect.bottom - 10 - 180 and meowthRightFlag:
+                    meowthPos = (170, 307)
+                    rightSeatFlag = True
+                    meowthRightFlag = False  # Off boarding boat meowth
+
+                # James movements
+
+                if event.button == 1 and rect.left + 10 + 270 > x > rect.left + 10 + 220 and rect.bottom - 10 - 130 > y > rect.bottom - 10 - 270 and (
+                        not jamesLeftFlag or not jamesRightFlag):
+                    if leftSeatFlag:
+                        jamesPos = (340, 192)
+                        leftSeatFlag = False
+                        jamesLeftFlag = True
+                    elif rightSeatFlag:
+                        jamesPos = (390, 192)
+                        rightSeatFlag = False
+                        jamesRightFlag = True  # On Boarding boat james
+                if event.button == 1 and rect.left + 10 + 370 > x > rect.left + 10 + 320 and rect.bottom - 10 - 140 > y > rect.bottom - 10 - 280 and jamesLeftFlag:
+                    jamesPos = (220, 210)
+                    leftSeatFlag = True
+                    jamesLeftFlag = False
+                if event.button == 1 and rect.left + 10 + 420 > x > rect.left + 10 + 370 and rect.bottom - 10 - 140 > y > rect.bottom - 10 - 280 and jamesRightFlag:
+                    jamesPos = (220, 210)
+                    rightSeatFlag = True
+                    jamesRightFlag = False  # Off boarding boat james
+
+                # Jessie movements
+
+                if event.button == 1 and rect.left + 10 + 270 > x > rect.left + 10 + 220 and rect.bottom - 10 - 130 > y > rect.bottom - 10 - 270 and (
+                        not jessieLeftFlag or not jessieRightFlag):
+                    if leftSeatFlag:
+                        jessiePos = (340, 192)
+                        leftSeatFlag = False
+                        jessieLeftFlag = True
+                    elif rightSeatFlag:
+                        jessiePos = (390, 192)
+                        rightSeatFlag = False
+                        jessieRightFlag = True  # On Boarding boat jessie
+                if event.button == 1 and rect.left + 10 + 370 > x > rect.left + 10 + 320 and rect.bottom - 10 - 140 > y > rect.bottom - 10 - 280 and jessieLeftFlag:
+                    jessiePos = (270, 210)
+                    leftSeatFlag = True
+                    jessieLeftFlag = False
+                if event.button == 1 and rect.left + 10 + 420 > x > rect.left + 10 + 370 and rect.bottom - 10 - 140 > y > rect.bottom - 10 - 280 and jessieRightFlag:
+                    jessiePos = (270, 210)
+                    rightSeatFlag = True
+                    jessieRightFlag = False  # Off boarding boat jessie
+
+            #  row boat condition
             # Storing boolean values for which pokemons and Team Rocket positions on boat
 
             bool_arr = numpy.array(
