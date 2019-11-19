@@ -42,48 +42,64 @@ background = pygame.image.load("resources/images/background.png")
 boat = pygame.image.load("resources/images/boat.png")
 grass = pygame.image.load("resources/images/grass.png")
 water = pygame.image.load("resources/images/water.png")
+win = pygame.image.load("resources/images/win_background.png")
+lost = pygame.image.load("resources/images/lost_background.png")
+
 
 # positions
 
-pikachuPos = (960, 310)
-pikachuLeftFlag = False
-pikachuRightFlag = False
+def reset_values():
+    global pikachuPos, pikachuLeftFlag, pikachuRightFlag
+    pikachuPos = (960, 310)
+    pikachuLeftFlag = False
+    pikachuRightFlag = False
 
-squirtlePos = (1010, 310)
-squirtleLeftFlag = False
-squirtleRightFlag = False
+    global squirtlePos, squirtleLeftFlag, squirtleRightFlag
+    squirtlePos = (1010, 310)
+    squirtleLeftFlag = False
+    squirtleRightFlag = False
 
-charmanderPos = (1060, 310)
-charmanderLeftFlag = False
-charmanderRightFlag = False
+    global charmanderPos, charmanderLeftFlag, charmanderRightFlag
+    charmanderPos = (1060, 310)
+    charmanderLeftFlag = False
+    charmanderRightFlag = False
 
-meowthPos = (1110, 305)
-meowthLeftFlag = False
-meowthRightFlag = False
+    global meowthPos, meowthLeftFlag, meowthRightFlag
+    meowthPos = (1110, 305)
+    meowthLeftFlag = False
+    meowthRightFlag = False
 
-jamesPos = (1160, 215)
-jamesLeftFlag = False
-jamesRightFlag = False
+    global jamesPos, jamesLeftFlag, jamesRightFlag
+    jamesPos = (1160, 215)
+    jamesLeftFlag = False
+    jamesRightFlag = False
 
-jessiePos = (1210, 215)
-jessieLeftFlag = False
-jessieRightFlag = False
+    global jessiePos, jessieLeftFlag, jessieRightFlag
+    jessiePos = (1210, 215)
+    jessieLeftFlag = False
+    jessieRightFlag = False
 
-boatPos = (840, 332)
-boatRightFlag = True
-boatLeftFlag = False
+    global boatPos, boatRightFlag, boatLeftFlag
+    boatPos = (840, 332)
+    boatRightFlag = True
+    boatLeftFlag = False
 
+    global leftSeatFlag, rightSeatFlag
+    leftSeatFlag = True
+    rightSeatFlag = True
+
+
+reset_values()  # Reset/Initialize values of players and boat
 leftSeatBoatRHS = (850, 292)  # left seat of right hand side boat
 rightSeatBoatRHS = (900, 292)  # right seat of right hand side boat
 leftSeatBoatLHS = (340, 292)  # left seat of left hand side boat
 rightSeatBoatLHS = (390, 292)  # right seat of left hand side boat
 
-leftSeatFlag = True
-rightSeatFlag = True
-
 while not exit_demo:  # 4 - keep looping through
     screen.fill(0)  # 5 - clear the screen before drawing it again
-    # screen.blit(background, (0, 0))  # 6 - draw the screen elements
+    screen.blit(background, (0, 0))  # 6 - draw the screen elements
+    # screen.blit(win, (0, 0))
+    # screen.blit(lost, (0,0))
 
     hwnd = pygame.display.get_wm_info()["window"]  # get our window ID:
     prototype = WINFUNCTYPE(BOOL, HWND, POINTER(RECT))  # Jump through all the ctypes hoops:
@@ -110,7 +126,7 @@ while not exit_demo:  # 4 - keep looping through
     screen.blit(reset, (1040, 50))  # Reset button
     screen.blit(water, (330, 240))  # water position
     screen.blit(boat, boatPos)
-    screen.blit(grass, (960, 177))  # right side grass 7 - update the screen
+    screen.blit(grass, (960, 177))  # right side grass 7 - update the screen'''
 
     x = pyautogui.position().x  # x-coordinate of mouse position on screen not window
     y = pyautogui.position().y  # y-coordinate of mouse position
@@ -126,36 +142,7 @@ while not exit_demo:  # 4 - keep looping through
             # reset button coordinates
 
             if event.button == 1 and rect.right - 10 - 190 > x > rect.right - 10 - 240 and rect.top + 30 + 120 > y > rect.top + 30 + 50:
-                pikachuPos = (960, 310)
-                pikachuLeftFlag = False
-                pikachuRightFlag = False
-
-                squirtlePos = (1010, 310)
-                squirtleLeftFlag = False
-                squirtleRightFlag = False
-
-                charmanderPos = (1060, 310)
-                charmanderLeftFlag = False
-                charmanderRightFlag = False
-
-                meowthPos = (1110, 305)
-                meowthLeftFlag = False
-                meowthRightFlag = False
-
-                jamesPos = (1160, 215)
-                jamesLeftFlag = False
-                jamesRightFlag = False
-
-                jessiePos = (1210, 215)
-                jessieLeftFlag = False
-                jessieRightFlag = False
-
-                boatPos = (840, 332)
-                boatRightFlag = True
-                boatLeftFlag = False
-
-                leftSeatFlag = True
-                rightSeatFlag = True
+                reset_values()
 
             # solution button coordinates
 
@@ -501,7 +488,7 @@ while not exit_demo:  # 4 - keep looping through
     screen.blit(charmander, charmanderPos)  # draw charmander image here
     screen.blit(meowth, meowthPos)  # draw meowth image here
     screen.blit(james, jamesPos)  # draw james image here
-    screen.blit(jessie, jessiePos)  # draw jessie image here
+    screen.blit(jessie, jessiePos)  # draw jessie image here'''
     pygame.display.flip()  # 8 - loop through the events
     pygame.display.update()  # update screen
     clock.tick(FPS)
