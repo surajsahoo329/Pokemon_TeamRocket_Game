@@ -35,7 +35,9 @@ charmander = pygame.image.load("resources/images/charmander.png")
 meowth = pygame.image.load("resources/images/meowth.png")
 james = pygame.image.load("resources/images/james.png")
 jessie = pygame.image.load("resources/images/jessie.png")
+reset = pygame.image.load("resources/images/reset.png")
 go = pygame.image.load("resources/images/pokeball.png")
+solution = pygame.image.load("resources/images/solution.png")
 background = pygame.image.load("resources/images/background.png")
 boat = pygame.image.load("resources/images/boat.png")
 grass = pygame.image.load("resources/images/grass.png")
@@ -103,7 +105,9 @@ while not exit_demo:  # 4 - keep looping through
         screen.blit(jessie, jessiePos)
 
     screen.blit(grass, (0, 182))  # left side grass
+    screen.blit(solution, (240, 50))  # Solution button
     screen.blit(go, (640, 50))  # Go pokeball boat rowing signal
+    screen.blit(reset, (1040, 50))  # Reset button
     screen.blit(water, (330, 240))  # water position
     screen.blit(boat, boatPos)
     screen.blit(grass, (960, 177))  # right side grass 7 - update the screen
@@ -118,6 +122,45 @@ while not exit_demo:  # 4 - keep looping through
             exit(1)
 
         elif pygame.MOUSEBUTTONUP == event.type:
+
+            # reset button coordinates
+
+            if event.button == 1 and rect.right - 10 - 190 > x > rect.right - 10 - 240 and rect.top + 30 + 120 > y > rect.top + 30 + 50:
+                pikachuPos = (960, 310)
+                pikachuLeftFlag = False
+                pikachuRightFlag = False
+
+                squirtlePos = (1010, 310)
+                squirtleLeftFlag = False
+                squirtleRightFlag = False
+
+                charmanderPos = (1060, 310)
+                charmanderLeftFlag = False
+                charmanderRightFlag = False
+
+                meowthPos = (1110, 305)
+                meowthLeftFlag = False
+                meowthRightFlag = False
+
+                jamesPos = (1160, 215)
+                jamesLeftFlag = False
+                jamesRightFlag = False
+
+                jessiePos = (1210, 215)
+                jessieLeftFlag = False
+                jessieRightFlag = False
+
+                boatPos = (840, 332)
+                boatRightFlag = True
+                boatLeftFlag = False
+
+                leftSeatFlag = True
+                rightSeatFlag = True
+
+            # solution button coordinates
+
+            if event.button == 1 and rect.left + 10 + 285 > x > rect.left + 10 + 235 and rect.top + 30 + 120 > y > rect.top + 30 + 50:
+                print("solution button")
 
             if boatRightFlag:
 
@@ -357,7 +400,7 @@ while not exit_demo:  # 4 - keep looping through
 
                 # Jessie movements
 
-                if event.button == 1 and rect.left + 10 + 270 > x > rect.left + 10 + 220 and rect.bottom - 10 - 130 > y > rect.bottom - 10 - 270 and (
+                if event.button == 1 and rect.left + 10 + 320 > x > rect.left + 10 + 270 and rect.bottom - 10 - 130 > y > rect.bottom - 10 - 270 and (
                         not jessieLeftFlag or not jessieRightFlag):
                     if leftSeatFlag:
                         jessiePos = (340, 192)
@@ -450,7 +493,7 @@ while not exit_demo:  # 4 - keep looping through
                             else:
                                 jessiePos = (900, 192)
             else:
-                print("Not clicked on go button")
+                print("")
 
     screen.blit(boat, boatPos)  # draw boat image here
     screen.blit(pikachu, pikachuPos)  # draw pikachu image here
