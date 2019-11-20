@@ -95,6 +95,9 @@ rightSeatBoatRHS = (900, 292)  # right seat of right hand side boat
 leftSeatBoatLHS = (340, 292)  # left seat of left hand side boat
 rightSeatBoatLHS = (390, 292)  # right seat of left hand side boat
 
+state = [3, 3, 1]  # (left 3 = number of missionaries), (middle 3 = number of cannibals), (right 1 = right side of
+# river)
+
 while not exit_demo:  # 4 - keep looping through
     screen.fill(0)  # 5 - clear the screen before drawing it again
     screen.blit(background, (0, 0))  # 6 - draw the screen elements
@@ -132,6 +135,14 @@ while not exit_demo:  # 4 - keep looping through
     y = pyautogui.position().y  # y-coordinate of mouse position
 
     for event in pygame.event.get():
+
+        # Storing boolean values for which pokemons and Team Rocket positions on boat
+
+        bool_arr = numpy.array(
+            [pikachuLeftFlag, pikachuRightFlag, squirtleLeftFlag, squirtleRightFlag, charmanderLeftFlag,
+             charmanderRightFlag, meowthLeftFlag, meowthRightFlag, jamesLeftFlag, jamesRightFlag, jessieLeftFlag,
+             jessieRightFlag], dtype=bool)
+
         if event.type == pygame.QUIT:  # check if the event is the X button
             pygame.quit()  # if it is quit the game
             exit_demo = True
@@ -154,7 +165,8 @@ while not exit_demo:  # 4 - keep looping through
                 # Pikachu movements
 
                 if event.button == 1 and rect.right - 10 - 270 > x > rect.right - 10 - 320 and rect.bottom - 10 - 130 > y > rect.bottom - 10 - 160 and (
-                        not pikachuLeftFlag or not pikachuRightFlag):  # 1-left, 2-middle, 3-right, 4-height, 5-wheel up,
+                        not pikachuLeftFlag or not pikachuRightFlag):  # 1-left, 2-middle, 3-right, 4-height, 5-wheel
+                    # up,
                     # 6-wheel down
                     if leftSeatFlag:
                         pikachuPos = leftSeatBoatRHS
@@ -407,12 +419,6 @@ while not exit_demo:  # 4 - keep looping through
                     jessieRightFlag = False  # Off boarding boat jessie
 
             #  row boat condition
-            # Storing boolean values for which pokemons and Team Rocket positions on boat
-
-            bool_arr = numpy.array(
-                [pikachuLeftFlag, pikachuRightFlag, squirtleLeftFlag, squirtleRightFlag, charmanderLeftFlag,
-                 charmanderRightFlag, meowthLeftFlag, meowthRightFlag, jamesLeftFlag, jamesRightFlag, jessieLeftFlag,
-                 jessieRightFlag], dtype=bool)
 
             if event.button == 1 and rect.left + 10 + 705 > x > rect.left + 10 + 555 and rect.top + 30 + 120 > y > rect.top + 30 + 50 and (
                     not leftSeatFlag or not rightSeatFlag):
@@ -448,7 +454,12 @@ while not exit_demo:  # 4 - keep looping through
                                 jessiePos = (340, 192)
                             else:
                                 jessiePos = (390, 192)
-                else:
+                        if bool_arr[j] and 0 <= j <= 5:
+                            state[0] -= 1
+                        elif bool_arr[j] and j > 5:
+                            state[1] -= 1
+                    state[2] = 0
+                else:  # else boatLeftFlag
                     boatLeftFlag = False
                     boatRightFlag = True
                     boatPos = (840, 332)
@@ -479,8 +490,11 @@ while not exit_demo:  # 4 - keep looping through
                                 jessiePos = (850, 192)
                             else:
                                 jessiePos = (900, 192)
-            else:
-                print("")
+                        if bool_arr[j] and 0 <= j <= 5:
+                            state[0] += 1
+                        elif bool_arr[j] and j > 5:
+                            state[1] += 1
+                        state[2] = 1
 
     screen.blit(boat, boatPos)  # draw boat image here
     screen.blit(pikachu, pikachuPos)  # draw pikachu image here
@@ -488,7 +502,11 @@ while not exit_demo:  # 4 - keep looping through
     screen.blit(charmander, charmanderPos)  # draw charmander image here
     screen.blit(meowth, meowthPos)  # draw meowth image here
     screen.blit(james, jamesPos)  # draw james image here
-    screen.blit(jessie, jessiePos)  # draw jessie image here'''
+    screen.blit(jessie, jessiePos)  # draw jessie image here
+    if state[1] > state[0] >= 1:
+        screen.blit(lost, (0, 0))
+    elif state[0] == 0 and state[1] == 0 and state[2] == 0:
+        screen.blit(win, (0, 0))
     pygame.display.flip()  # 8 - loop through the events
     pygame.display.update()  # update screen
     clock.tick(FPS)
