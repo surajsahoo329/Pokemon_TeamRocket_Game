@@ -8,9 +8,13 @@ import numpy
 import pyautogui
 import pygame
 
+import main
+
 os.environ['SDL_VIDEO_CENTERED'] = '1'  # setting pygame window to centre
 
 root = tk.Tk()
+
+moves_list = main.main()  # Storing steps with another list
 
 screen_width = root.winfo_screenwidth()  # getting width of screen resolution
 screen_height = root.winfo_screenheight()  # getting height of screen resolution
