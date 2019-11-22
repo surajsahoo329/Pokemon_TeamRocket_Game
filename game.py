@@ -32,6 +32,10 @@ clock = pygame.time.Clock()  # for limiting FPS
 FPS = 10
 exit_demo = False
 
+font = pygame.font.Font('freesansbold.ttf', 32)  # 2nd parameter is size of font
+textWin = font.render("Gotta Catch 'Em All.", True, (0, 0, 0))
+textLost = font.render("Ohh No...You Lose", True, (0, 0, 0))
+
 # 3 - Load images
 pikachu = pygame.image.load("resources/images/pikachu.png")
 squirtle = pygame.image.load("resources/images/squirtle.png")
@@ -109,8 +113,6 @@ def solve():
     global event
     i = 1  # moves list position
     global pikachuPos, squirtlePos, charmanderPos, meowthPos, jamesPos, jessiePos, boatPos
-    global pikachuLeftFlag, pikachuRightFlag, squirtleLeftFlag, squirtleRightFlag, charmanderLeftFlag, charmanderRightFlag
-    global meowthLeftFlag, meowthRightFlag, jamesLeftFlag, jamesRightFlag, jessieLeftFlag, jessieRightFlag
 
     # Initially all the people are on RHS of the river
 
@@ -122,30 +124,15 @@ def solve():
     jessieRHS = True
 
     reset_values()
+
     while not exit_demo:  # 4 - keep looping through
+
         screen.fill(0)  # 5 - clear the screen before drawing it again
         screen.blit(background, (0, 0))  # 6 - draw the screen elements
 
-        if not pikachuLeftFlag or not pikachuRightFlag:
-            screen.blit(pikachu, pikachuPos)
-        if not squirtleLeftFlag or not squirtleRightFlag:
-            screen.blit(squirtle, squirtlePos)
-        if not charmanderLeftFlag or not charmanderRightFlag:
-            screen.blit(charmander, charmanderPos)
-        if not meowthLeftFlag or not meowthRightFlag:
-            screen.blit(meowth, meowthPos)
-        if not jamesLeftFlag or not jamesRightFlag:
-            screen.blit(james, jamesPos)
-        if not jessieLeftFlag or not jessieRightFlag:
-            screen.blit(jessie, jessiePos)
-
         screen.blit(grass, (0, 182))  # left side grass
-        screen.blit(solution, (240, 50))  # Solution button
-        screen.blit(go, (640, 50))  # Go pokeball boat rowing signal
-        screen.blit(reset, (1040, 50))  # Reset button
         screen.blit(water, (330, 240))  # water position
-        screen.blit(boat, boatPos)
-        screen.blit(grass, (960, 177))  # right side grass 7 - update the screen
+        screen.blit(grass, (960, 177))  # right side grass 7 - update the screen'''
 
         for event in pygame.event.get():
 
@@ -226,6 +213,8 @@ def solve():
 
             boatPos = (330, 332)  # Finally update boat position to go LHS
 
+            pygame.display.update()  # update screen
+
         if moves_list[i][2] == 1:  # boat is in LHS and will move to RHS
             missionary = moves_list[i][0] - moves_list[i - 1][0]  # number of missionaries to be moved
             cannibal = moves_list[i][1] - moves_list[i - 1][1]  # number of cannibals to be moved
@@ -295,7 +284,10 @@ def solve():
                     jamesRHS = True
                     jessieRHS = True
                     pass
+
             boatPos = (840, 332)  # Finally update boat position to go RHS
+
+            pygame.display.update()  # update screen
 
         i += 1
 
@@ -306,14 +298,20 @@ def solve():
         screen.blit(meowth, meowthPos)  # draw meowth image here
         screen.blit(james, jamesPos)  # draw james image here
         screen.blit(jessie, jessiePos)  # draw jessie image here
-        if moves_list[i][1] > moves_list[i][0] >= 1:
-            screen.blit(lost, (0, 0))
-        elif moves_list[i][0] == 0 and moves_list[i][1] == 0 and moves_list[i][2] == 0:
-            screen.blit(win, (0, 0))
-            break
-        pygame.display.flip()  # 8 - loop through the events
+
         pygame.display.update()  # update screen
-        clock.tick(FPS)
+        pygame.time.delay(5000)
+
+        if not pikachuRHS and not squirtleRHS and not charmanderRHS and not meowthRHS and not jamesRHS and not jessieRHS:
+            screen.blit(win, (0, 0))
+            pygame.display.update()  # update screen
+            pygame.time.delay(5000)
+            exit(1)
+        elif moves_list[i][1] > moves_list[i][0] >= 1:
+            screen.blit(lost, (0, 0))
+            pygame.display.update()  # update screen
+            pygame.time.delay(5000)
+            exit(2)
 
 
 while not exit_demo:  # 4 - keep looping through
@@ -345,7 +343,7 @@ while not exit_demo:  # 4 - keep looping through
     screen.blit(reset, (1040, 50))  # Reset button
     screen.blit(water, (330, 240))  # water position
     screen.blit(boat, boatPos)
-    screen.blit(grass, (960, 177))  # right side grass 7 - update the screen'''
+    screen.blit(grass, (960, 177))  # right side grass 7 - update the screen
 
     x = pyautogui.position().x  # x-coordinate of mouse position on screen not window
     y = pyautogui.position().y  # y-coordinate of mouse position
@@ -375,6 +373,7 @@ while not exit_demo:  # 4 - keep looping through
 
             if event.button == 1 and rect.left + 10 + 285 > x > rect.left + 10 + 235 and rect.top + 30 + 120 > y > rect.top + 30 + 50:
                 solve()  # call solve function to solve the problem using iterative deepening search
+                break
 
             if boatRightFlag:
 
@@ -721,8 +720,16 @@ while not exit_demo:  # 4 - keep looping through
     screen.blit(jessie, jessiePos)  # draw jessie image here
     if state[1] > state[0] >= 1:
         screen.blit(lost, (0, 0))
+        screen.blit(textLost, (492, 240))  # 1280 // 2.6 and 480 // 2 center coordinates
+        pygame.display.update()
+        pygame.time.delay(5000)
+        exit(3)
     elif state[0] == 0 and state[1] == 0 and state[2] == 0:
         screen.blit(win, (0, 0))
+        screen.blit(textWin, (592, 20))
+        pygame.display.update()
+        pygame.time.delay(5000)
+        exit(4)
     pygame.display.flip()  # 8 - loop through the events
     pygame.display.update()  # update screen
     clock.tick(FPS)
