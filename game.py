@@ -100,13 +100,225 @@ leftSeatBoatLHS = (340, 292)  # left seat of left hand side boat
 rightSeatBoatLHS = (390, 292)  # right seat of left hand side boat
 
 state = [3, 3, 1]  # (left 3 = number of missionaries), (middle 3 = number of cannibals), (right 1 = right side of
+
+
 # river)
+
+def solve():
+    global exit_demo
+    global event
+    i = 1  # moves list position
+    global pikachuPos, squirtlePos, charmanderPos, meowthPos, jamesPos, jessiePos, boatPos
+    global pikachuLeftFlag, pikachuRightFlag, squirtleLeftFlag, squirtleRightFlag, charmanderLeftFlag, charmanderRightFlag
+    global meowthLeftFlag, meowthRightFlag, jamesLeftFlag, jamesRightFlag, jessieLeftFlag, jessieRightFlag
+
+    # Initially all the people are on RHS of the river
+
+    pikachuRHS = True
+    squirtleRHS = True
+    charmanderRHS = True
+    meowthRHS = True
+    jamesRHS = True
+    jessieRHS = True
+
+    reset_values()
+    while not exit_demo:  # 4 - keep looping through
+        screen.fill(0)  # 5 - clear the screen before drawing it again
+        screen.blit(background, (0, 0))  # 6 - draw the screen elements
+
+        if not pikachuLeftFlag or not pikachuRightFlag:
+            screen.blit(pikachu, pikachuPos)
+        if not squirtleLeftFlag or not squirtleRightFlag:
+            screen.blit(squirtle, squirtlePos)
+        if not charmanderLeftFlag or not charmanderRightFlag:
+            screen.blit(charmander, charmanderPos)
+        if not meowthLeftFlag or not meowthRightFlag:
+            screen.blit(meowth, meowthPos)
+        if not jamesLeftFlag or not jamesRightFlag:
+            screen.blit(james, jamesPos)
+        if not jessieLeftFlag or not jessieRightFlag:
+            screen.blit(jessie, jessiePos)
+
+        screen.blit(grass, (0, 182))  # left side grass
+        screen.blit(solution, (240, 50))  # Solution button
+        screen.blit(go, (640, 50))  # Go pokeball boat rowing signal
+        screen.blit(reset, (1040, 50))  # Reset button
+        screen.blit(water, (330, 240))  # water position
+        screen.blit(boat, boatPos)
+        screen.blit(grass, (960, 177))  # right side grass 7 - update the screen
+
+        for event in pygame.event.get():
+
+            if event.type == pygame.QUIT:  # check if the event is the X button
+                pygame.quit()  # if it is quit the game
+                exit_demo = True
+                exit(1)
+
+        if moves_list[i][2] == 0:  # boat is in RHS and will move to LHS
+            missionary = moves_list[i - 1][0] - moves_list[i][0]  # number of missionaries to be moved
+            cannibal = moves_list[i - 1][1] - moves_list[i][1]  # number of cannibals to be moved
+
+            if missionary == 1:
+                if pikachuRHS:
+                    pikachuPos = (20, 312)
+                    pikachuRHS = False
+                    pass
+                elif squirtleRHS:
+                    squirtlePos = (70, 312)
+                    squirtleRHS = False
+                    pass
+                elif charmanderRHS:
+                    charmanderPos = (120, 312)
+                    charmanderRHS = False
+                    pass
+            elif missionary == 2:
+                if pikachuRHS and squirtleRHS:
+                    pikachuPos = (20, 312)
+                    squirtlePos = (70, 312)
+                    pikachuRHS = False
+                    squirtleRHS = False
+                    pass
+                elif pikachuRHS and charmanderRHS:
+                    pikachuPos = (20, 312)
+                    charmanderPos = (120, 312)
+                    pikachuRHS = False
+                    charmanderRHS = False
+                    pass
+                elif squirtleRHS and charmanderRHS:
+                    squirtlePos = (70, 312)
+                    charmanderPos = (120, 312)
+                    squirtleRHS = False
+                    charmanderRHS = False
+                    pass
+
+            if cannibal == 1:
+                if meowthRHS:
+                    meowthPos = (170, 307)
+                    meowthRHS = False
+                    pass
+                elif jamesRHS:
+                    jamesPos = (220, 210)
+                    jamesRHS = False
+                    pass
+                elif jessieRHS:
+                    jessiePos = (270, 210)
+                    jessieRHS = False
+                    pass
+            elif cannibal == 2:
+                if meowthRHS and jamesRHS:
+                    meowthPos = (170, 307)
+                    jamesPos = (220, 210)
+                    meowthRHS = False
+                    jamesRHS = False
+                    pass
+                elif meowthRHS and jessieRHS:
+                    meowthPos = (170, 307)
+                    jessiePos = (270, 210)
+                    meowthRHS = False
+                    jessieRHS = False
+                    pass
+                elif jamesRHS and jessiePos:
+                    jamesPos = (220, 210)
+                    jessiePos = (270, 210)
+                    jamesRHS = False
+                    jessieRHS = False
+                    pass
+
+            boatPos = (330, 332)  # Finally update boat position to go LHS
+
+        if moves_list[i][2] == 1:  # boat is in LHS and will move to RHS
+            missionary = moves_list[i][0] - moves_list[i - 1][0]  # number of missionaries to be moved
+            cannibal = moves_list[i][1] - moves_list[i - 1][1]  # number of cannibals to be moved
+
+            if missionary == 1:
+                if not pikachuRHS:
+                    pikachuPos = (960, 312)
+                    pikachuRHS = True
+                    pass
+                elif not squirtleRHS:
+                    squirtlePos = (1010, 312)
+                    squirtleRHS = True
+                    pass
+                elif not charmanderRHS:
+                    charmanderPos = (1060, 312)
+                    charmanderRHS = True
+                    pass
+            elif missionary == 2:
+                if not pikachuRHS and not squirtleRHS:
+                    pikachuPos = (20, 312)
+                    squirtlePos = (70, 312)
+                    pikachuRHS = True
+                    squirtleRHS = True
+                    pass
+                elif not pikachuRHS and not charmanderRHS:
+                    pikachuPos = (20, 312)
+                    charmanderPos = (120, 312)
+                    pikachuRHS = True
+                    charmanderRHS = True
+                    pass
+                elif not squirtleRHS and not charmanderRHS:
+                    squirtlePos = (70, 312)
+                    charmanderPos = (120, 312)
+                    squirtleRHS = True
+                    charmanderRHS = True
+                    pass
+
+            if cannibal == 1:
+                if not meowthRHS:
+                    meowthPos = (1110, 307)
+                    meowthRHS = True
+                    pass
+                elif not jamesRHS:
+                    jamesPos = (1160, 210)
+                    jamesRHS = True
+                    pass
+                elif not jessieRHS:
+                    jessiePos = (1210, 210)
+                    jessieRHS = True
+                    pass
+            elif cannibal == 2:
+                if not meowthRHS and not jamesRHS:
+                    meowthPos = (170, 307)
+                    jamesPos = (220, 210)
+                    meowthRHS = True
+                    jamesRHS = True
+                    pass
+                elif not meowthRHS and not jessieRHS:
+                    meowthPos = (170, 307)
+                    jessiePos = (270, 210)
+                    meowthRHS = True
+                    jessieRHS = True
+                    pass
+                elif not jamesRHS and not jessiePos:
+                    jamesPos = (220, 210)
+                    jessiePos = (270, 210)
+                    jamesRHS = True
+                    jessieRHS = True
+                    pass
+            boatPos = (840, 332)  # Finally update boat position to go RHS
+
+        i += 1
+
+        screen.blit(boat, boatPos)  # draw boat image here
+        screen.blit(pikachu, pikachuPos)  # draw pikachu image here
+        screen.blit(squirtle, squirtlePos)  # draw squirtle image here
+        screen.blit(charmander, charmanderPos)  # draw charmander image here
+        screen.blit(meowth, meowthPos)  # draw meowth image here
+        screen.blit(james, jamesPos)  # draw james image here
+        screen.blit(jessie, jessiePos)  # draw jessie image here
+        if moves_list[i][1] > moves_list[i][0] >= 1:
+            screen.blit(lost, (0, 0))
+        elif moves_list[i][0] == 0 and moves_list[i][1] == 0 and moves_list[i][2] == 0:
+            screen.blit(win, (0, 0))
+            break
+        pygame.display.flip()  # 8 - loop through the events
+        pygame.display.update()  # update screen
+        clock.tick(FPS)
+
 
 while not exit_demo:  # 4 - keep looping through
     screen.fill(0)  # 5 - clear the screen before drawing it again
     screen.blit(background, (0, 0))  # 6 - draw the screen elements
-    # screen.blit(win, (0, 0))
-    # screen.blit(lost, (0,0))
 
     hwnd = pygame.display.get_wm_info()["window"]  # get our window ID:
     prototype = WINFUNCTYPE(BOOL, HWND, POINTER(RECT))  # Jump through all the ctypes hoops:
@@ -162,7 +374,7 @@ while not exit_demo:  # 4 - keep looping through
             # solution button coordinates
 
             if event.button == 1 and rect.left + 10 + 285 > x > rect.left + 10 + 235 and rect.top + 30 + 120 > y > rect.top + 30 + 50:
-                print("solution button")
+                solve()  # call solve function to solve the problem using iterative deepening search
 
             if boatRightFlag:
 
